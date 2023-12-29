@@ -1,0 +1,114 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo: { 
+    typeName: 'Book',
+    typeNamePlural: 'Books',
+    title.value: 'Title',
+    description.value: 'ISBN'
+}
+
+annotate view ZRAP_CV_BOOKS with
+{
+  @UI.facet: [{
+    id: 'YOURBOOK',
+    type: #COLLECTION,
+    position: 10,
+    label: 'Your Book'
+  }, { 
+    id: 'GENERAL',
+    type: #IDENTIFICATION_REFERENCE,
+    parentId: 'YOURBOOK',
+    label: 'General Information'
+  }, { 
+    id: 'READING',
+    type: #FIELDGROUP_REFERENCE,
+    parentId: 'YOURBOOK',
+    targetQualifier: 'READFAC',
+    label: 'Reading Information'
+  }]
+
+  @UI.hidden: true
+  BookGuid;
+
+  @EndUserText.label: 'ISBN'
+  @UI.lineItem: [{position: 10, importance: #HIGH }]
+  @UI.selectionField: [{position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  ISBN;
+
+  @EndUserText.label: 'Title'
+  @UI.lineItem: [{position: 20, importance: #HIGH }]
+  @UI.selectionField: [{position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  Title;
+
+  @EndUserText.label: 'Genre'
+  @UI.lineItem: [{position: 40, importance: #MEDIUM }]
+  @UI.selectionField: [{position: 20 }]
+  @UI.identification: [{ position: 30 }]
+  Genre;
+
+  @EndUserText.label: 'Author'
+  @UI.lineItem: [{position: 30, importance: #MEDIUM }]
+  @UI.identification: [{ position: 40 }]
+  Author;
+  
+  @EndUserText.label: 'Pages'
+  @UI.identification: [{ position: 50 }]
+  BookPages;
+  
+  @EndUserText.label: 'Description'
+  @UI.identification: [{ position: 60 }]
+  Description;
+  
+  @EndUserText.label: 'Purchasing Date'
+  @UI.identification: [{ position: 10 }]
+  PurchasingDate;
+  
+
+  @EndUserText.label: 'Finished'
+  @UI.lineItem: [{position: 50, importance: #LOW},
+                { type: #FOR_ACTION, dataAction: 'finishBook', label: 'Finish Book'}]
+  @UI.fieldGroup: [{ qualifier: 'READFAC', position: 10 }]
+  ReadingFinished;
+
+  @UI.lineItem: [{
+      label: 'Rating',
+      valueQualifier: 'Rating',
+      type: #AS_DATAPOINT,
+      position: 60, 
+      importance: #LOW
+  }]
+  @UI.dataPoint: {
+   targetValue: 5,
+   visualization: #RATING
+  }
+  @UI.fieldGroup: [{label: 'Your Rating', qualifier: 'READFAC', valueQualifier: 'Rating', type: #AS_DATAPOINT, position: 20 }]
+  Rating;
+  
+  @EndUserText.label: 'Notes'
+  @UI.fieldGroup: [{ qualifier: 'READFAC', position: 30 }]
+  Note;
+  
+  @EndUserText.label: 'Cover Image'
+  @UI.identification: [{ position: 70 }]
+  Attachment;
+  
+  @UI.hidden: true
+  MimeType;
+  
+  @UI.hidden: true
+  FileName;
+ 
+  @UI.hidden: true
+    ChangedAt;
+    @UI.hidden: true
+    ChangedBy;
+    @UI.hidden: true
+    CreatedAt;
+    @UI.hidden: true
+    CreatedBy;
+    @UI.hidden: true
+    TotalChangedAt;
+
+}

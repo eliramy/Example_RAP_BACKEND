@@ -1,0 +1,4 @@
+@EndUserText.label: 'Books - Service Definition'
+define service ZRAP_BOOKS_UI {
+  expose ZRAP_CV_BOOKS;
+}

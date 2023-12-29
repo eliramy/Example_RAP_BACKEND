@@ -1,0 +1,47 @@
+managed implementation in class zbp_rap_iv_books unique;
+
+with draft;
+
+define behavior for ZRAP_IV_BOOKS alias Books
+persistent table zrap_books
+draft table zrap_books_d
+lock master
+total etag ChangedAt
+etag master TotalChangedAt
+//authorization master ( instance )
+{
+  create;
+  update (features: instance);
+  delete;
+
+  field (numbering : managed, readonly ) BookGuid;
+  field (mandatory) ISBN, PurchasingDate;
+  field (features: instance) Genre;
+
+  action (features: instance) finishBook;
+
+  draft action Activate;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+
+  draft determine action Prepare {
+    validation validateISBN;
+  }
+
+  validation validateISBN on save { create; update; field ISBN;}
+
+  determination determineNote on modify { create; }
+
+  mapping for ZRAP_BOOKS corresponding {
+    BookGuid = book_guid;
+    PurchasingDate = purch_date;
+    BookPages = book_pages;
+    ReadingFinished = finished;
+    ChangedAt = changed_at;
+    ChangedBy = changed_by;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    TotalChangedAt = total_changed_at;
+  }
+}
